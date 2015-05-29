@@ -10,6 +10,7 @@
 
 struct kmp_search_data {
     int next[KMP_MAX_PATTERN_SIZE];
+    int id;
     char pattern[KMP_MAX_PATTERN_SIZE];
     int len;
 };
@@ -22,7 +23,7 @@ static int kmp_init(struct Search *s_obj)
     return 0;
 }
 
-static int kmp_add(struct Search *s_obj, char *pattern, int len)
+static int kmp_add(struct Search *s_obj, char *pattern, int len, int id)
 {
     struct kmp_search_data *sd = (struct kmp_search_data *)(s_obj->priv);
 
@@ -31,6 +32,7 @@ static int kmp_add(struct Search *s_obj, char *pattern, int len)
 
     memcpy(sd->pattern, pattern, len);
     sd->len = len;
+    sd->id = id;
 
     return 0;
 }
@@ -131,8 +133,8 @@ static int kmp_dump(struct Search *s_obj)
     int m = sd->len;
     int i;
 
-    printf("KMP: Search pattern %s\n", x);
-    printf("Next Table:\n\t");
+    printf("Knuth–Morris–Pratt: Search pattern %s", x);
+    printf("\n\tNext Table:\n\t");
     for(i = 0; i <= m; i++) {
         printf("%2d  ", next[i]);
     }

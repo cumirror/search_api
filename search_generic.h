@@ -11,7 +11,7 @@ struct Search_ops {
     int priv_size;
 
     int (*init)(struct Search *s_obj);
-    int (*add)(struct Search *s_obj, char *pattern, int len);
+    int (*add)(struct Search *s_obj, char *pattern, int len, int id);
     int (*build)(struct Search *s_obj);
     int (*search)(struct Search *s_obj, char *text, int len);
     int (*dump)(struct Search *s_obj);
@@ -23,9 +23,9 @@ int register_search_ops(struct Search_ops *ops);
 
 struct Search *search_new(char *name);
 
-static inline int search_add(struct Search *s_obj, char *pattern, int len)
+static inline int search_add(struct Search *s_obj, char *pattern, int len, int id)
 {
-    return s_obj->ops->add(s_obj, pattern, len);
+    return s_obj->ops->add(s_obj, pattern, len, id);
 }
 
 static inline int search_build(struct Search *s_obj)

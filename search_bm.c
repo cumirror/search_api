@@ -14,6 +14,7 @@
 struct bm_search_data {
     int delta1[ALPHABET_LEN];
     int delta2[BM_MAX_PATTERN_SIZE];
+    int id;
     char pattern[BM_MAX_PATTERN_SIZE];
     int len;
 };
@@ -131,7 +132,7 @@ static int bm_init(struct Search *s_obj)
     return 0;
 }
 
-static int bm_add(struct Search *s_obj, char *pattern, int len)
+static int bm_add(struct Search *s_obj, char *pattern, int len, int id)
 {
     struct bm_search_data *sd = (struct bm_search_data *)(s_obj->priv);
 
@@ -140,6 +141,7 @@ static int bm_add(struct Search *s_obj, char *pattern, int len)
 
     memcpy(sd->pattern, pattern, len);
     sd->len = len;
+    sd->id = id;
 
     return 0;
 }
