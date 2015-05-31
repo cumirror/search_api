@@ -5,6 +5,7 @@
 extern int kmp_module_init();
 extern int bm_module_init();
 extern int ac_module_init();
+extern int trie_module_init();
 
 int kmp_test()
 {
@@ -42,7 +43,7 @@ int ac_test()
     char *pattern1  = "ababa";
     char *pattern2 = "ds";
     char *pattern3  = "ABD";
-    char *text  = "sfdAGCAGAGAGGCabababababAGAGAGBsABCDABDdfCdsABCDABDfDABDABCDABD";
+    char *text  = "sfdAGCAGAGAGGCabababababAGAGAGBsABCDABDdfCdsABCDABDfDABDABCDAbD";
 
     search_add(s, pattern1, strlen(pattern1), 1);
     search_add(s, pattern2, strlen(pattern2), 5);
@@ -52,6 +53,24 @@ int ac_test()
     search_now(s, text, strlen(text));
     return 0;
 }
+
+int trie_test()
+{
+    struct Search * s = search_new("trie");
+    char *pattern1  = "ababa";
+    char *pattern2 = "ds";
+    char *pattern3  = "ABD";
+    char *text  = "sfdAGCAGAGAGGCabababababAGAGAGBsABCDABDdfCdsABCDABDfDABDABCDAbD";
+
+    search_add(s, pattern1, strlen(pattern1), 1);
+    search_add(s, pattern2, strlen(pattern2), 5);
+    search_add(s, pattern3, strlen(pattern3), 6);
+    search_build(s);
+    search_dump(s);
+    search_now(s, text, strlen(text));
+    return 0;
+}
+
 
 
 int main()
@@ -64,6 +83,9 @@ int main()
 
     ac_module_init();
     ac_test();
+
+    trie_module_init();
+    trie_test();
 
     return 0;
 }
